@@ -6,6 +6,14 @@ The User Service handles user authentication and authorization
 
 The User Service is responsible for validates users credentials of users registered in the database
 
+## Architecture Diagram
+
+![img.png](architecture.png)
+
+## Database Diagram
+
+![img.png](database.png)
+
 ## Technologies
 
 - Java 17 with Spring Boot 
