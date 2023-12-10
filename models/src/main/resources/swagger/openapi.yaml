@@ -1,0 +1,108 @@
+openapi: 3.0.0
+security:
+  - bearerAuth: [ ]
+
+info:
+  description: user Service API
+  title: User Service
+  version: 1.0.0-SNAPSHOT
+
+tags:
+  - name: "Web API"
+    description: "Web API Endpoints"
+paths:
+  "/health/check":
+    get:
+      summary: Health check endpoint
+      description: Health check endpoint
+      operationId: getHealthCheck
+      responses:
+        "default":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessHealthCheck'
+        "200":
+          description: Service is healthy and running
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessHealthCheck'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessHealthCheck'
+
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessHealthCheck'
+  "/user/validate":
+    post:
+      summary: Validates a user
+      description: Validates a user
+      operationId: validateUser
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserValidationInput'
+      responses:
+        "default":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "200":
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserValidationOutput'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Error:
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+    SuccessHealthCheck:
+      properties:
+        success:
+          type: boolean
+    UserValidationInput:
+      properties:
+        user:
+          type: string
+        password:
+          type: string
+    UserValidationOutput:
+      properties:
+        validUser:
+          type: boolean
