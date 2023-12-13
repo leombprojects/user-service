@@ -43,9 +43,11 @@ steps:
   - task: Docker@0
     displayName: 'Pushing Docker image to ACR'
     inputs:
-      azureSubscription: '55810e90-1a86-417b-b294-ff177412f3f5'
+      containerregistrytype: 'Azure Container Registry'
+      azureSubscription: 'Azure subscription 1(55810e90-1a86-417b-b294-ff177412f3f5)'
       azureContainerRegistry: '{"loginServer":"acrempcalories.azurecr.io", "id" : "/subscriptions/55810e90-1a86-417b-b294-ff177412f3f5/resourceGroups/resource-group-emp-calories/providers/Microsoft.ContainerRegistry/registries/acrempcalories"}'
       action: 'Push an image'
+      imageName: '$(Build.Repository.Name):$(Build.BuildId)'
       includeLatestTag: true
 
   - task: CopyFiles@2
